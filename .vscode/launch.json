@@ -2,6 +2,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "app",
+            "request": "launch",
+            "mainClass": "packages.sistema.app",
+            "projectName": "java configs_8935035b"
+        },
+        {
+            "type": "java",
             "name": "aplication1",
             "request": "launch",
             "mainClass": "packages.aplication1.aplication1",
