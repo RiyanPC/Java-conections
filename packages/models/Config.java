@@ -4,7 +4,7 @@ public class Config {
     private int id;
     private String user;
     private String password;
-
+    private String creationTime;
 
 public Config(){
 
@@ -15,6 +15,7 @@ public Config(int id, String user, String password) {
     this.id = id;
     this.user = user;
     this.password = password;
+    this.creationTime = creationTime;
 }
 
 public int getId() {
@@ -41,5 +42,12 @@ public void setPassword(String password) {
         this.password = password;
 }
 
+public String getCreationTime() {
+        return creationTime;
 }
 
+public void setCreationTime(String creationTime) {
+        this.creationTime = creationTime;
+}
+
+}
