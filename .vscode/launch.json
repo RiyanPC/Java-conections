@@ -2,6 +2,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "app",
+            "request": "launch",
+            "mainClass": "packages.view.app",
+            "projectName": "java configs_8935035b"
+        },
+        {
+            "type": "java",
             "name": "Conection",
             "request": "launch",
             "mainClass": "packages.models.Conection",

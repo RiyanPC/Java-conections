@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.Properties;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.Scanner;
 
 public class Conection {
 
@@ -51,21 +52,30 @@ public class Conection {
     }
 
 
-    // Metodo principal para probar las conexiones
-    public static void main(String[] args) {
-        Conection con = new Conection();
-        Connection local = con.getLocalConnection();
-        if (local != null) {
-            System.out.println("Conexión local exitosa");
+    // Permite seleccionar el tipo de conexión
+    public Connection getConnectionByType(String tipo) {
+        if ("local".equalsIgnoreCase(tipo)) {
+            return getLocalConnection();
+        } else if ("remota".equalsIgnoreCase(tipo) || "remote".equalsIgnoreCase(tipo)) {
+            return getRemoteConnection();
         } else {
-            System.out.println("Error en la conexión local");
+            System.out.println("Tipo de conexión no válido. Usa 'local' o 'remota'.");
+            return null;
         }
+    }
 
-        Connection remote = con.getRemoteConnection();
-        if (remote != null) {
-            System.out.println("Conexión remota exitosa");
+    // Metodo principal para probar la selección de conexión
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Selecciona el tipo de conexión (local/remota): ");
+        String tipo = scanner.nextLine();
+        Conection con = new Conection();
+        Connection conn = con.getConnectionByType(tipo);
+        if (conn != null) {
+            System.out.println("Conexión " + tipo + " exitosa");
         } else {
-            System.out.println("Error en la conexión remota");
+            System.out.println("Error en la conexión " + tipo);
         }
+        scanner.close();
     }
 }
