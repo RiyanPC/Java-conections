@@ -1,6 +1,6 @@
-package packages.aplication1; 
+package packages.sistema; 
 
-public class aplication1{
+public class app{
     public static void main(String[] args) {
         
     }
