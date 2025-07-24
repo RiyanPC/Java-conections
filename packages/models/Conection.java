@@ -3,16 +3,32 @@ package packages.models;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Properties;
+import java.io.FileInputStream;
+import java.io.IOException;
 
 public class Conection {
 
     Connection conexion;
+    Properties props;
+
+    public Conection() {
+        props = new Properties();
+        try {
+
+            props.load(new FileInputStream("config.properties"));
+        } catch (IOException e) {
+            System.out.println("No se pudo cargar el archivo de propiedades: " + e);
+        }
+    }
 
     // Conexion Local
     public Connection getLocalConnection() {
         try {
-            String myBD = "jdbc:mysql://localhost:3306/db_test?serverTimezone=UTC";
-            conexion = DriverManager.getConnection(myBD, "root", "");
+            String url = props.getProperty("local.url");
+            String user = props.getProperty("local.user");
+            String password = props.getProperty("local.password");
+            conexion = DriverManager.getConnection(url, user, password);
             return conexion;
         } catch (SQLException e) {
             System.out.println(e.toString());
@@ -23,8 +39,10 @@ public class Conection {
     // Conexion remota
     public Connection getRemoteConnection() {
         try {
-            String myBD = "jdbc:mysql://sql10.freesqldatabase.com:3306/sql10790842?serverTimezone=UTC";
-            conexion = DriverManager.getConnection(myBD, "sql10790842", "whXigt84kn");
+            String url = props.getProperty("remote.url");
+            String user = props.getProperty("remote.user");
+            String password = props.getProperty("remote.password");
+            conexion = DriverManager.getConnection(url, user, password);
             return conexion;
         } catch (SQLException e) {
             System.out.println(e.toString());

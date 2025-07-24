@@ -15,7 +15,7 @@ public Config(int id, String user, String password) {
     this.id = id;
     this.user = user;
     this.password = password;
-    this.creationTime = creationTime;
+    this.creationTime = java.time.LocalDateTime.now().toString();
 }
 
 public int getId() {

@@ -1,0 +1,4 @@
+// run classpath
+
+javac -cp ".;libraries/mysql-connector-j-9.4.0.jar" packages/models/Conection.java
+java -cp ".;libraries/mysql-connector-j-9.4.0.jar" packages.models.Conection
