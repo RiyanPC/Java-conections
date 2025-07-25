@@ -4,7 +4,7 @@ public class Encrypter {
     public static void main(String[] args) {
         String clave = "bianca123";
 
-        String textoAEncriptar = "root";
+        String textoAEncriptar = "";
 
         BasicTextEncryptor textEncryptor = new BasicTextEncryptor();
         textEncryptor.setPassword(clave);

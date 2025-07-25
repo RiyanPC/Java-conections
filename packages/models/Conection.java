@@ -42,7 +42,7 @@ public class Conection {
     public Connection getLocalConnection() {
         try {
             String url = props.getProperty("local.url");
-            String user = props.getProperty("local.user");
+            String user = decryptIfNeeded(props.getProperty("local.user"));
             String password = decryptIfNeeded(props.getProperty("local.password"));
             conexion = DriverManager.getConnection(url, user, password);
             return conexion;
@@ -56,7 +56,7 @@ public class Conection {
     public Connection getRemoteConnection() {
         try {
             String url = props.getProperty("remote.url");
-            String user = props.getProperty("remote.user");
+            String user = decryptIfNeeded(props.getProperty("remote.user"));
             String password = decryptIfNeeded(props.getProperty("remote.password"));
             conexion = DriverManager.getConnection(url, user, password);
             return conexion;

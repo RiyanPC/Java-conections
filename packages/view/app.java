@@ -27,15 +27,19 @@ public class app extends JFrame {
         localButton.addActionListener(_ -> {
             String secretKey = javax.swing.JOptionPane.showInputDialog(this, "Ingrese la clave secreta:");
             if (secretKey == null || secretKey.isEmpty()) {
-                resultLabel.setText("Clave secreta no ingresada");
+                resultLabel.setText("Clave no ingresada");
                 return;
             }
-            Conection con = new Conection(secretKey);
-            Connection conn = con.getLocalConnection();
-            if (conn != null) {
-                resultLabel.setText("Conexión local exitosa");
-            } else {
-                resultLabel.setText("Error en la conexión local");
+            try {
+                Conection con = new Conection(secretKey);
+                Connection conn = con.getLocalConnection();
+                if (conn != null) {
+                    resultLabel.setText("Conexión local exitosa");
+                } else {
+                    resultLabel.setText("Error en la conexión local");
+                }
+            } catch (Exception ex) {
+                resultLabel.setText("Clave secreta incorrecta o error de desencriptación");
             }
         });
 
@@ -43,19 +47,23 @@ public class app extends JFrame {
         remoteButton.addActionListener(_ -> {
             String secretKey = javax.swing.JOptionPane.showInputDialog(this, "Ingrese la clave secreta:");
             if (secretKey == null || secretKey.isEmpty()) {
-                resultLabel.setText("Clave secreta no ingresada");
+                resultLabel.setText("Clave no ingresada");
                 return;
             }
-            Conection con = new Conection(secretKey);
-            Connection conn = con.getRemoteConnection();
-            if (conn != null) {
-                resultLabel.setText("Conexión remota exitosa");
-            } else {
-                resultLabel.setText("Error en la conexión remota");
+            try {
+                Conection con = new Conection(secretKey);
+                Connection conn = con.getRemoteConnection();
+                if (conn != null) {
+                    resultLabel.setText("Conexión remota exitosa");
+                } else {
+                    resultLabel.setText("Error en la conexión remota");
+                }
+            } catch (Exception ex) {
+                resultLabel.setText("Clave secreta incorrecta o error de desencriptación");
             }
         });
 
-        // Mostrar los componentes en el panel
+        // Mostrar los componentes del panel
         panel.add(label);
         panel.add(localButton);
         panel.add(remoteButton);
