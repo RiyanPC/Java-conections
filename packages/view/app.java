@@ -31,6 +31,17 @@ public class app extends JFrame {
                 return;
             }
             try {
+                // Verificar desencriptación del usuario
+                org.jasypt.util.text.BasicTextEncryptor textEncryptor = new org.jasypt.util.text.BasicTextEncryptor();
+                textEncryptor.setPassword(secretKey);
+                String userDecrypted = null;
+                String userProp = packages.models.Conection.class.getResource("/../application.properties") != null ? "local.user" : "root";
+                try {
+                    userDecrypted = textEncryptor.decrypt("GIzoaqwF2m4n3e+tLBcWCA==");
+                } catch (Exception ex) {
+                    resultLabel.setText("Clave secreta incorrecta");
+                    return;
+                }
                 Conection con = new Conection(secretKey);
                 Connection conn = con.getLocalConnection();
                 if (conn != null) {
@@ -51,6 +62,15 @@ public class app extends JFrame {
                 return;
             }
             try {
+                // Verificar desencriptación del usuario remoto
+                org.jasypt.util.text.BasicTextEncryptor textEncryptor = new org.jasypt.util.text.BasicTextEncryptor();
+                textEncryptor.setPassword(secretKey);
+                try {
+                    textEncryptor.decrypt("82jU1aRl6ZXmdZerWtKEyai6T/4EE3aT");
+                } catch (Exception ex) {
+                    resultLabel.setText("Clave secreta incorrecta");
+                    return;
+                }
                 Conection con = new Conection(secretKey);
                 Connection conn = con.getRemoteConnection();
                 if (conn != null) {
