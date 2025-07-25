@@ -24,8 +24,13 @@ public class app extends JFrame {
         resultLabel.setFont(new java.awt.Font("Arial", java.awt.Font.PLAIN, 20));
 
         // opcion local
-        localButton.addActionListener(e -> {
-            Conection con = new Conection();
+        localButton.addActionListener(_ -> {
+            String secretKey = javax.swing.JOptionPane.showInputDialog(this, "Ingrese la clave secreta:");
+            if (secretKey == null || secretKey.isEmpty()) {
+                resultLabel.setText("Clave secreta no ingresada");
+                return;
+            }
+            Conection con = new Conection(secretKey);
             Connection conn = con.getLocalConnection();
             if (conn != null) {
                 resultLabel.setText("Conexión local exitosa");
@@ -35,8 +40,13 @@ public class app extends JFrame {
         });
 
         // opcion remota
-        remoteButton.addActionListener(e -> {
-            Conection con = new Conection();
+        remoteButton.addActionListener(_ -> {
+            String secretKey = javax.swing.JOptionPane.showInputDialog(this, "Ingrese la clave secreta:");
+            if (secretKey == null || secretKey.isEmpty()) {
+                resultLabel.setText("Clave secreta no ingresada");
+                return;
+            }
+            Conection con = new Conection(secretKey);
             Connection conn = con.getRemoteConnection();
             if (conn != null) {
                 resultLabel.setText("Conexión remota exitosa");

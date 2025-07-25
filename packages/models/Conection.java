@@ -15,10 +15,12 @@ public class Conection {
     Connection conexion;
     Properties props;
 
-    public Conection() {
+    private String secretKey;
+
+    public Conection(String secretKey) {
+        this.secretKey = secretKey;
         props = new Properties();
         try {
-
             props.load(new FileInputStream("config.properties"));
         } catch (IOException e) {
             System.out.println("No se pudo cargar el archivo de propiedades: " + e);
@@ -30,13 +32,7 @@ public class Conection {
         if (value != null && value.startsWith("ENC(") && value.endsWith(")")) {
             String enc = value.substring(4, value.length() - 1);
             BasicTextEncryptor textEncryptor = new BasicTextEncryptor();
-            String secret = props.getProperty("secretparameter");
-            if (secret != null && secret.startsWith("ENC(") && secret.endsWith(")")) {
-                // Poner la clave fija o pedirla al usuario
-                textEncryptor.setPassword("bianca123");
-                secret = textEncryptor.decrypt(secret.substring(4, secret.length() - 1));
-            }
-            textEncryptor.setPassword(secret);
+            textEncryptor.setPassword(secretKey);
             return textEncryptor.decrypt(enc);
         }
         return value;
@@ -88,9 +84,11 @@ public class Conection {
     // Revisa la conexión
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
+        System.out.print("Ingrese la clave secreta para desencriptar: ");
+        String secretKey = scanner.nextLine();
         System.out.print("Selecciona el tipo de conexión (local/remota): ");
         String tipo = scanner.nextLine();
-        Conection con = new Conection();
+        Conection con = new Conection(secretKey);
         Connection conn = con.getConnectionByType(tipo);
         if (conn != null) {
             System.out.println("Conexión " + tipo + " exitosa");
