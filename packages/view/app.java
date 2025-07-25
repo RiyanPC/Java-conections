@@ -20,6 +20,8 @@ public class app extends JFrame {
         JButton remoteButton = new JButton("Conexión Remota");
 
         panel.add(label);
+        panel.add(localButton);
+        panel.add(remoteButton);
         add(panel);
     }
 
