@@ -12,13 +12,13 @@ import javax.swing.JTextField;
 public class app extends JFrame {
     public app() {
         setTitle("Seleccione el tipo de conexión");
-        setSize(500, 300);
+        setSize(300, 300);
         setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
         setLocationRelativeTo(null);
 
         JPanel panel = new JPanel();
-        JLabel titleLabel = ComponentFactory.createLabel("Acceder", 24, java.awt.Font.BOLD);
+        JLabel titleLabel = ComponentFactory.createLabel("Acceder al sistema", 24, java.awt.Font.BOLD);
         JLabel secretLabel = ComponentFactory.createLabel("Ingrese la clave secreta: ", 14, java.awt.Font.BOLD);
         JLabel tipoConexionLabel = ComponentFactory.createLabel("Elija el tipo de conexión", 18, java.awt.Font.BOLD);
         JTextField secretKeyField = ComponentFactory.createTextField(20, 14);
@@ -96,6 +96,7 @@ public class app extends JFrame {
         panel.add(titleLabel);
         panel.add(secretLabel);
         panel.add(secretKeyField);
+        panel.add(tipoConexionLabel);
         panel.add(localButton);
         panel.add(remoteButton);
         panel.add(resultLabel);
