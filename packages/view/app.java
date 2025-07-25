@@ -6,26 +6,32 @@ import javax.swing.JPanel;
 import javax.swing.JLabel;
 import packages.models.Conection;
 import java.sql.Connection;
+import packages.view.ComponentFactory;
+import javax.swing.JTextField;
 
 public class app extends JFrame {
     public app() {
         setTitle("Seleccione el tipo de conexión");
         setSize(500, 300);
+        setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
         setLocationRelativeTo(null);
 
         JPanel panel = new JPanel();
-        JLabel label = new JLabel("Por favor, seleccione el tipo de conexión:");
-        label.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 24));
-        JButton localButton = new JButton("Conexión Local");
-        JButton remoteButton = new JButton("Conexión Remota");
+        JLabel titleLabel = ComponentFactory.createLabel("Acceder", 24, java.awt.Font.BOLD);
+        JLabel secretLabel = ComponentFactory.createLabel("Ingrese la clave secreta: ", 14, java.awt.Font.BOLD);
+        JLabel tipoConexionLabel = ComponentFactory.createLabel("Elija el tipo de conexión", 18, java.awt.Font.BOLD);
+        JTextField secretKeyField = ComponentFactory.createTextField(20, 14);
+        JButton localButton = ComponentFactory.createButton("Conexión Local", 16, java.awt.Font.PLAIN);
+        JButton remoteButton = ComponentFactory.createButton("Conexión Remota", 16, java.awt.Font.PLAIN);
+
         
         JLabel resultLabel = new JLabel("");
         resultLabel.setFont(new java.awt.Font("Arial", java.awt.Font.PLAIN, 20));
 
         // opcion local
         localButton.addActionListener(_ -> {
-            String secretKey = javax.swing.JOptionPane.showInputDialog(this, "Ingrese la clave secreta:");
+            String secretKey = secretKeyField.getText();
             if (secretKey == null || secretKey.isEmpty()) {
                 resultLabel.setText("Clave no ingresada");
                 return;
@@ -35,7 +41,6 @@ public class app extends JFrame {
                 org.jasypt.util.text.BasicTextEncryptor textEncryptor = new org.jasypt.util.text.BasicTextEncryptor();
                 textEncryptor.setPassword(secretKey);
                 String userDecrypted = null;
-                String userProp = packages.models.Conection.class.getResource("/../application.properties") != null ? "local.user" : "root";
                 try {
                     userDecrypted = textEncryptor.decrypt("GIzoaqwF2m4n3e+tLBcWCA==");
                 } catch (Exception ex) {
@@ -56,7 +61,7 @@ public class app extends JFrame {
 
         // opcion remota
         remoteButton.addActionListener(_ -> {
-            String secretKey = javax.swing.JOptionPane.showInputDialog(this, "Ingrese la clave secreta:");
+            String secretKey = secretKeyField.getText();
             if (secretKey == null || secretKey.isEmpty()) {
                 resultLabel.setText("Clave no ingresada");
                 return;
@@ -81,10 +86,16 @@ public class app extends JFrame {
             } catch (Exception ex) {
                 resultLabel.setText("Clave secreta incorrecta o error de desencriptación");
             }
+
+            
+
+
         });
 
         // Mostrar los componentes del panel
-        panel.add(label);
+        panel.add(titleLabel);
+        panel.add(secretLabel);
+        panel.add(secretKeyField);
         panel.add(localButton);
         panel.add(remoteButton);
         panel.add(resultLabel);
