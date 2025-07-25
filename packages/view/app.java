@@ -45,6 +45,7 @@ public class app extends JFrame {
             }
         });
 
+        // Mostrar los componentes en el panel
         panel.add(label);
         panel.add(localButton);
         panel.add(remoteButton);
@@ -54,8 +55,10 @@ public class app extends JFrame {
 
     public static void main(String[] args) {
         javax.swing.SwingUtilities.invokeLater(() -> {
+            // Correr la aplicación
             app ventana = new app();
             ventana.setVisible(true);
+
         });
     }
 }

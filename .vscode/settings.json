@@ -3,6 +3,7 @@
         "."
     ],
     "java.project.referencedLibraries": [
-        "libraries\\mysql-connector-j-9.4.0.jar"
+        "c:\\Andre\\VS Code Projects\\java configs\\libraries\\jasypt-1.9.3.jar",
+        "c:\\Andre\\VS Code Projects\\java configs\\libraries\\mysql-connector-j-9.4.0.jar"
     ]
 }

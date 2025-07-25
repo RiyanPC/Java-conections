@@ -7,6 +7,7 @@ import java.util.Properties;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Scanner;
+import org.jasypt.util.text.BasicTextEncryptor;
 
 
 public class Conection {
@@ -24,12 +25,29 @@ public class Conection {
         }
     }
 
+    // Desencripta si el valor está en formato ENC(...)
+    private String decryptIfNeeded(String value) {
+        if (value != null && value.startsWith("ENC(") && value.endsWith(")")) {
+            String enc = value.substring(4, value.length() - 1);
+            BasicTextEncryptor textEncryptor = new BasicTextEncryptor();
+            String secret = props.getProperty("secretparameter");
+            if (secret != null && secret.startsWith("ENC(") && secret.endsWith(")")) {
+                // Poner la clave fija o pedirla al usuario
+                textEncryptor.setPassword("bianca123");
+                secret = textEncryptor.decrypt(secret.substring(4, secret.length() - 1));
+            }
+            textEncryptor.setPassword(secret);
+            return textEncryptor.decrypt(enc);
+        }
+        return value;
+    }
+
     // Conexion Local
     public Connection getLocalConnection() {
         try {
             String url = props.getProperty("local.url");
             String user = props.getProperty("local.user");
-            String password = props.getProperty("local.password");
+            String password = decryptIfNeeded(props.getProperty("local.password"));
             conexion = DriverManager.getConnection(url, user, password);
             return conexion;
         } catch (SQLException e) {
@@ -43,7 +61,7 @@ public class Conection {
         try {
             String url = props.getProperty("remote.url");
             String user = props.getProperty("remote.user");
-            String password = props.getProperty("remote.password");
+            String password = decryptIfNeeded(props.getProperty("remote.password"));
             conexion = DriverManager.getConnection(url, user, password);
             return conexion;
         } catch (SQLException e) {
@@ -53,7 +71,9 @@ public class Conection {
     }
 
 
-    // Permite seleccionar el tipo de conexión
+
+    // Probar las conexiones
+    // Permite seleccionar el tipo de conexión Local o Remota
     public Connection getConnectionByType(String tipo) {
         if ("local".equalsIgnoreCase(tipo)) {
             return getLocalConnection();
@@ -65,7 +85,7 @@ public class Conection {
         }
     }
 
-    // Metodo principal para probar la selección de conexión
+    // Revisa la conexión
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Selecciona el tipo de conexión (local/remota): ");
